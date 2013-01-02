@@ -3,20 +3,20 @@
 #include<graphics.h>
 #include<math.h>
 
-#define MAX 10
+#define MAX 10						// Defines max no. of objects
 
-typedef struct point_coordinates
+typedef struct point_coordinates			// Useful in drawing graph
 {
-	int x;
-	int y;
+	int x;						// X co-ordinate of point
+	int y;						// Y co-ordinate of point
 } pcoords;
 
-float ipmatrix[MAX][MAX];
-int binmat[MAX][MAX];
-pcoords point[MAX];
-int n = 0;
+float ipmatrix[MAX][MAX];				// Input matrix
+int binmat[MAX][MAX];					// Binary matrix
+pcoords point[MAX];					// Points for graph
+int n = 0;						// Total no. of objects
 
-void drawGraph();
+void drawGraph();					// Function to draw graph
 
 void main()
 {
@@ -35,10 +35,10 @@ void main()
 			printf("\nEnter element[%d][%d]: ", i, j);
 			scanf("%f", &temp);
 			ipmatrix[i][j] = temp;
-			if(temp<=threshold)
-				binmat[i][j] = 0;
+			if(temp<=threshold)		// Compare to threshold
+				binmat[i][j] = 0;	// 0 if lesser
 			else
-				binmat[i][j] = 1;
+				binmat[i][j] = 1;	// 1 if greater
 		}
 	}
 	printf("\nPrinting matrix...\n");
@@ -64,30 +64,30 @@ void main()
 
 void drawGraph()
 {
-	int gd = DETECT, gm = 0, R = 60, R2 = 80;
-	double theta = 0;
-	double thetainc;
-	int xc, yc;
-	int xi, yi, xt, yt;
+	int gd = DETECT, gm = 0, R = 60, R2 = 80;	
+	double theta = 0;				 
+	double thetainc;				// Theta increment
+	int xc, yc;					// Center point of screen
+	int xi, yi, xt, yt;				
 	int i, j;
-	char name[3];
+	char name[3];					
 	initgraph(&gd, &gm, "C:\\TC\\BGI");
 	clrscr();
 	cleardevice();
 	xc = getmaxx()/2;
 	yc = getmaxy()/2;
-	thetainc = 2 * M_PI;
-	thetainc = thetainc / n;
+	thetainc = 2 * M_PI;				// Increment = (2 * pi)/n
+	thetainc = thetainc / n;		
 	for(i = 1;i<=n;i++)
 	{
-		xi = xc + (R * cos(theta));
-		yi = yc + (R * sin(theta));
-		point[i].x = xi;
+		xi = xc + (R * cos(theta));		// Polar resolution of X component
+		yi = yc + (R * sin(theta));		// Polar resolution of Y component
+		point[i].x = xi;			// Set point co-ords
 		point[i].y = yi;
-		circle(xi, yi, 2);
+		circle(xi, yi, 2);			// Circle to denote point, makes it more clear to see
 		floodfill(xi, yi, WHITE);
-		xt = xc + (R2 * cos(theta));
-		yt = yc + (R2 * sin(theta));
+		xt = xc + (R2 * cos(theta));		// R2 is slightly greater than R
+		yt = yc + (R2 * sin(theta));		// so name of point appears away from point
 		sprintf(name, "%d", i);
 		outtextxy(xt, yt, name);
 		theta += thetainc;
@@ -97,7 +97,7 @@ void drawGraph()
 	{
 		for(i=1; i<j;i++)
 		{
-			if(binmat[i][j]==1)
+			if(binmat[i][j]==1)		// If binary matrix marked, connect i & j points
 				line(point[i].x, point[i].y, point[j].x, point[j].y);
 		}
 
