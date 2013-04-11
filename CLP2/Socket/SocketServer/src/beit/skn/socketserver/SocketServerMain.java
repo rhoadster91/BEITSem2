@@ -1,4 +1,4 @@
-package beit.skn.rmi;
+package beit.skn.socketserver;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class RMIServerMain
+public class SocketServerMain
 {
 	static ServerSocket server;
 	static Socket socket;
@@ -34,24 +34,31 @@ public class RMIServerMain
 				case 1:
 					numRequest = ((Integer)objIn.readObject()).intValue();
 					numReply = digitAddition(numRequest);
+					System.out.println("Performing digit addition of " + numRequest);
+					System.out.println("Pushing answer " + numReply + " to client");
 					objOut.writeObject(new Integer(numReply));					
 					break;
 					
 				case 2:
 					numRequest = ((Integer)objIn.readObject()).intValue();
 					numReply = factorial(numRequest);
+					System.out.println("Performing factorial of " + numRequest);
+					System.out.println("Pushing answer " + numReply + " to client");					
 					objOut.writeObject(new Integer(numReply));					
 					break;
 					
 				case 31:
 					strRequest = (String)objIn.readObject();
 					numReply = strRequest.length();
+					System.out.println("Calculating length of " + strRequest);
+					System.out.println("Pushing answer " + numReply + " to client");					
 					objOut.writeObject(new Integer(numReply));
 					break;
 					
 				case 32:
 					strRequest = (String)objIn.readObject();
 					strRequest2 = (String)objIn.readObject();
+					System.out.println("Comparing " + strRequest + " and " + strRequest2);					
 					if(strRequest.contentEquals(strRequest2))
 						numReply = 1;
 					else
@@ -62,12 +69,15 @@ public class RMIServerMain
 				case 33:
 					strRequest = (String)objIn.readObject();
 					strRequest2 = (String)objIn.readObject();
+					System.out.println("Concatenating " + strRequest + " and " + strRequest2);					
 					strReply = strRequest.concat(strRequest2);
+					System.out.println("Pushing answer " + strReply+ " to client");
 					objOut.writeObject(strReply);
 					break;
 					
 				case 34:
 					strRequest = (String)objIn.readObject();
+					System.out.println("Checking " + strRequest+ " for palindrome");
 					if(strRequest.contentEquals(reverse(strRequest)))					
 						numReply = 1;
 					else
@@ -78,6 +88,7 @@ public class RMIServerMain
 				case 35:
 					strRequest = (String)objIn.readObject();
 					strRequest2 = (String)objIn.readObject();
+					System.out.println("Performing substriung tests for " + strRequest + " and " +  strRequest2);
 					if(strRequest.contentEquals(strRequest2))
 					{
 						numReply = 2;

@@ -1,0 +1,20 @@
+struct input_pair
+{
+	int a;
+	int b;
+};
+
+typedef string text< >;
+
+program GK_RPC
+{
+	version RPC_VERS
+	{
+		int add(input_pair) = 1;
+		int sub(input_pair) = 2;
+		int mult(input_pair) = 3;
+		int div(input_pair) = 4;
+		int rev_num(int input) = 5;
+		int lower_to_upper(string text) = 6;
+	} = 1;
+} = 31111111;

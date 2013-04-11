@@ -1,4 +1,4 @@
-package beit.skn.rmi;
+package beit.skn.socketclient;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class RMIClientMain
+public class SocketClientMain
 {
 	static Socket socket;
 	static ObjectInputStream objIn;
